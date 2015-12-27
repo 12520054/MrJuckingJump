@@ -19,7 +19,7 @@ EntityBase {
   // BoxCollider responsible for collision detection
   BoxCollider {
     id: platformCollider
-    width: parent.width // actual width is the same as the parent entity
+    width: parent.width + 10 // actual width is the same as the parent entity
     height: parent.height - 20 // actual height is slightly smaller so the collision works smoother
     bodyType: Body.Dynamic // only Dynamic bodies can collide with each other
     collisionTestingOnlyMode: true // collisions are detected, but no physics are applied to the colliding bodies
@@ -40,8 +40,8 @@ EntityBase {
     id: movement
     target: platform // which object will be affected
     property: "y" // which property will be affected
-    velocity:  frog.impulse / 2 // impulse is y velocity of the frog
-    running: frog.y < 210 // move only when the frog is jumping over the limit
+    velocity:  batMan.impulse / 2 // impulse is y velocity of the batMan
+    running: batMan.y < 210 // move only when the batMan is jumping over the limit
   }
 
   // wobble animation

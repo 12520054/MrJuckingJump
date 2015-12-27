@@ -22,8 +22,8 @@ SceneBase {
     color:"white"
   }
 
-  // key input will be handled by the controller in our frog-entity
-  Keys.forwardTo: frog.controller
+  // key input will be handled by the controller in our batMan-entity
+  Keys.forwardTo: batMan.controller
 
   // accelerometer can be used to react to tilting the phone
   Accelerometer {
@@ -35,45 +35,44 @@ SceneBase {
   PhysicsWorld {
     debugDrawVisible: false // turn it on for debugging
     updatesPerSecondForPhysics: 60
-    gravity.y: 9.8 // how much gravity do you want?
+    gravity.y: 12 // how much gravity do you want?
   }
 
   // the repeater adds ten platforms to the scene
   Repeater {
-    model: 10 // every platorm gets recycled so we define only ten of them
+    model: 5 // every platorm gets recycled so we define only ten of them
     Platform {
-      x: utils.generateRandomValueBetween(0, gameScene.width) // random value
-      y: gameScene.height / 10 * index // distribute the platforms across the screen
+      x: utils.generateRandomValueBetween(50, gameScene.width - 150) // random value
+      y: (gameScene.height / 5) * index // distribute the platforms across the screen
     }
   }
 
-  // the frog entity (player character)
-  Frog {
-    id: frog
-    x: gameScene.width / 2 // place the frog in the horizontal center
+  // the batMan entity (player character)
+  BatMan {
+    id: batMan
+    x: gameScene.width / 2
     y: gameScene.height / 2
   }
 
   // border at the bottom of the screen, used to check game-over
   Border {
     id: border
-    x: -gameScene.width*2
-    y: gameScene.height-10 // subtract a small value to make the border just visible in our scene
+    x: - gameScene.width*2
+    y: gameScene.height - 10 // subtract a small value to make the border just visible in our scene
   }
 
   // show current player score
   Image {
     id: scoreCounter
     source: "../../assets/scoreCounter.png"
-    height: 80
-    x: -15
-    y: -15
+    x: 0
+    y: 0
     // text component to show the score
     Text {
       id: scoreText
       anchors.centerIn: parent
-      color: "white"
-      font.pixelSize: 15
+      color: "black"
+      font.pixelSize: 17
       font.family: "Press Start 2P"
       text: score
     }
@@ -87,7 +86,7 @@ SceneBase {
       if(gameScene.state === "start") { // if the game is ready and the screen is clicked we start the game
         gameScene.state = "playing"
       }
-      if(gameScene.state === "gameOver") // if the frog is dead and the screen is clicked we restart the game
+      if(gameScene.state === "gameOver") // if the batMan is dead and the screen is clicked we restart the game
       {
         gameScene.state = "start"
       }
@@ -100,14 +99,25 @@ SceneBase {
     anchors.centerIn: parent
     source: gameScene.state == "gameOver" ? "../../assets/gameOverText.png" : "../../assets/clickToPlayText.png"
     visible: gameScene.state !== "playing"
+    SequentialAnimation on scale {
+        loops: Animation.Infinite
+        PropertyAnimation {
+            to: 0.9
+            duration: 500
+        }
+        PropertyAnimation {
+            to: 1.0
+            duration: 500
+        }
+    }
   }
 
   // options button to jump back to menu
   Image {
     id: menuButton
     source: "../../assets/optionsButton.png"
-    x: gameScene.width - 96
-    y: -40
+    x:parent.width - 75
+    y: -25
     scale: 0.5
 
     MouseArea {
@@ -116,7 +126,7 @@ SceneBase {
       onClicked: {
         menuScenePressed()
         // reset the gameScene
-        frog.die()
+        batMan.die()
         gameScene.state = "start"
       }
     }

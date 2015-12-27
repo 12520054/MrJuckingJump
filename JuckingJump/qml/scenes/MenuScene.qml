@@ -19,12 +19,18 @@ SceneBase {
   Image{
       source: "../../assets/tilegame-jucking-jump.png"
       x:0
-      y: 120
+      y: 100
+  }
+  Image {
+      source: "../../assets/leaf.png"
+      x:parent.width/2-width/2
+      y:parent.height-height
   }
 
   // column aligns its child components within a column
   Column {
-    anchors.centerIn: parent
+      x:0
+      y:350
     spacing: 10
 
     // play button to start game
@@ -35,6 +41,18 @@ SceneBase {
         id: gameSceneButton
         source: "../../assets/playButton.png"
         anchors.centerIn: parent
+      }
+
+      SequentialAnimation on scale {
+          loops: Animation.Infinite
+          PropertyAnimation {
+              to: 0.9
+              duration: 1000
+          }
+          PropertyAnimation {
+              to: 1.0
+              duration: 1000
+          }
       }
 
       MouseArea {
@@ -53,11 +71,50 @@ SceneBase {
         source: "../../assets/scoreButton.png"
         anchors.centerIn: parent
       }
+
+      SequentialAnimation on scale {
+          loops: Animation.Infinite
+          PropertyAnimation {
+              to: 0.9
+              duration: 1000
+          }
+          PropertyAnimation {
+              to: 1.0
+              duration: 1000
+          }
+      }
+
       MouseArea {
         id: scoreSceneMouseArea
         anchors.fill: parent
-        onClicked: frogNetworkView.visible = true
+        onClicked: batManNetworkView.visible = true
       }
+    }
+
+    Rectangle{
+        width: aboutTeamButton.width
+        height: aboutTeamButton.height
+        Image{
+            id: aboutTeamButton
+            source: "../../assets/aboutButton.png"
+            anchors.centerIn: parent
+        }
+        SequentialAnimation on scale {
+            loops: Animation.Infinite
+            PropertyAnimation {
+                to: 0.9
+                duration: 1000
+            }
+            PropertyAnimation {
+                to: 1.0
+                duration: 1000
+            }
+        }
+
+        MouseArea {
+          id: aboutSceneMouseArea
+          anchors.fill: parent
+        }
     }
   }
 }

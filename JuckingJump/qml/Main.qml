@@ -22,7 +22,7 @@ GameWindow {
     id: gameNetwork
     gameId: 206
     secret: "juckingjump"
-    gameNetworkView: frogNetworkView
+    gameNetworkView: batManNetworkView
   }
 
   // scene for the actual game
@@ -41,16 +41,16 @@ GameWindow {
     }
 
     VPlayGameNetworkView {
-      id: frogNetworkView
+      id: batManNetworkView
       visible: false
       anchors.fill: parent.gameWindowAnchorItem
 
       onShowCalled: {
-        frogNetworkView.visible = true
+        batManNetworkView.visible = true
       }
 
       onBackClicked: {
-        frogNetworkView.visible = false
+        batManNetworkView.visible = false
       }
     }
   }
